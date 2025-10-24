@@ -1,12 +1,12 @@
 # Expense Tracker
 
-An early-stage Next.js 13+ project with TypeScript and Prisma (PostgreSQL), designed to track expenses.
+An early-stage Next.js 16+ project with TypeScript and Prisma (PostgreSQL), designed to track expenses.
 
 > ⚠️ Early Stage – APIs and features are still in development.
 
 ## Features (So far)
 
-- Next.js 13+ with App Router and TypeScript
+- Next.js 16+ with App Router and TypeScript
 - Prisma ORM with PostgreSQL
 - lib/prisma.ts configured for safe hot reload in development
 - Example API route to test database connection
