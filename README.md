@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Expense Tracker
+
+An early-stage Next.js 13+ project with TypeScript and Prisma (PostgreSQL), designed to track expenses.
+
+> ⚠️ Early Stage – APIs and features are still in development.
+
+## Features (So far)
+
+- Next.js 13+ with App Router and TypeScript
+- Prisma ORM with PostgreSQL
+- lib/prisma.ts configured for safe hot reload in development
+- Example API route to test database connection
+- Dev-ready database migration setup
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone the repository**
+    ```bash
+    git clone <repository-url>
+    cd expense-tracker
+    ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Install dependencies**
+    ```bash
+    npm install
+    ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Configure environment variables**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+    Create a `.env` file in the root:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+    ```bash
+    DATABASE_URL="postgresql://username:password@localhost:5432/expense_tracker"
+    ```
+    
+    Replace with your PostgreSQL credentials.
 
-## Learn More
+4. **Set up Prisma**
 
-To learn more about Next.js, take a look at the following resources:
+    Generate Prisma Client:
+    ```bash
+    npx prisma generate
+    ```
+    Run initial migration (creates tables in the database):
+    ```bash
+    npx prisma migrate dev --name init
+    ```
+    (Optional) Reset the database if you want to start fresh:
+    ```bash
+    npx prisma migrate reset
+    ```
+5. **Run the development server**
+    ```bash
+    npm run dev
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    Visit `http://localhost:3000`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    Test the Prisma connection API route:
+    ```bash
+    http://localhost:3000/api/test-prisma
+    ```
 
-## Deploy on Vercel
+## Usage
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Import Prisma anywhere in your app:**
+    ```bash
+    import { prisma } from "@/lib/prisma";
+    
+    const users = await prisma.user.findMany();
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Add new models in prisma/schema.prisma and run migrations:**
+    ```bash
+    npx prisma migrate dev --name <migration-name>
+    ```
+
+## Tips
+
+- Use `npx prisma migrate reset` in development to clear all tables safely.
+- Always run `npx prisma generate` after updating schema.prisma.
+- The `globalForPrisma` setup avoids multiple PrismaClient instances during hot reload.
+
+## License
+
+MIT License
